@@ -1,16 +1,18 @@
-interface productDetails{
-    availabilityStatus: string,
-    brand:string,
-    catagory: string,
-    price: number,
-    rating: number,
-    title: string,
-    images:[],
-    description:string
+import { useDispatch } from "react-redux";
+import { addItemToCart } from "../features/CartSlice";
+import type { Product } from "../types";
+
+interface itemCardProp{
+  item:Product
 }
-export const ItemCard = (prop:productDetails) => {
-    const {availabilityStatus, price, rating, title, images,description} = prop.item;
-    console.log(prop);
+export const ItemCard = ({item}:itemCardProp) => {
+    const {id,availabilityStatus, price, rating, title, images,description} = item;
+     const dispatch = useDispatch();
+
+     const handleAddToCart = (e)=>{
+        e.preventDefault();
+        dispatch(addItemToCart(item));
+     }
     
   return (
     <div className="product-card ">
@@ -31,7 +33,7 @@ export const ItemCard = (prop:productDetails) => {
         </div>
         <div className="bottom-card">
             <p className="product-price">price: ₹{Math.floor(price * 88)}</p>
-            <button>ADD TO CART</button>
+            <button onClick={handleAddToCart}>ADD TO CART</button>
         </div>
         </div>
        </div>
