@@ -23,7 +23,11 @@ const initialState:CartState={
       const existingItem = state.items.find(item => item.id === newItem.id);     
       state.totalQuantity++;
       if (!existingItem) {
-      state.items.push(newItem)
+      state.items.push({
+        ...newItem,
+        quantity: 1,
+        totalPrice:newItem.price
+      })
         console.log("it is working: ", state.items);
         
       } else {

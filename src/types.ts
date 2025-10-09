@@ -5,7 +5,7 @@ export interface Product{
     price:number,
     rating: number,
     brand: string,
-    catagory:string,
+    category:string,
     images:[],
     availabilityStatus: string,
 }

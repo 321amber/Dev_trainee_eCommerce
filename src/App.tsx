@@ -19,9 +19,6 @@ const router = createBrowserRouter([
 ])
   return (
     <>
-      <nav>
-        <Navbar/>
-      </nav>
       <RouterProvider router={router}>
       <MainItems/>
       <CartItems/>

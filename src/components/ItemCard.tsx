@@ -6,7 +6,7 @@ interface itemCardProp{
   item:Product
 }
 export const ItemCard = ({item}:itemCardProp) => {
-    const {id,availabilityStatus, price, rating, title, images,description} = item;
+    const {id,availabilityStatus, price, rating, title, images,description,category} = item;
      const dispatch = useDispatch();
 
      const handleAddToCart = (e)=>{
@@ -26,14 +26,15 @@ export const ItemCard = ({item}:itemCardProp) => {
             <p className="product-title">{title}</p>
             <a className="product-description">{description.length>40?description.slice(0,40)+"...":description}</a>
             <p>rating: {rating}</p>
+            <p>category: {category}</p>
             
         <div>
         <div>
             <p>{availabilityStatus}</p>
         </div>
         <div className="bottom-card">
-            <p className="product-price">price: ₹{Math.floor(price * 88)}</p>
-            <button onClick={handleAddToCart}>ADD TO CART</button>
+            <p className="product-price">price: ₹{Math.floor(price * 88)}.00</p>
+            <button className="addButton" onClick={handleAddToCart}>ADD TO CART</button>
         </div>
         </div>
        </div>
