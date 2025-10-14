@@ -8,6 +8,7 @@ interface itemCardProp{
 export const ItemCard = ({item}:itemCardProp) => {
     const {id,availabilityStatus, price, rating, title, images,description,category} = item;
      const dispatch = useDispatch();
+     
 
      const handleAddToCart = (e)=>{
         e.preventDefault();

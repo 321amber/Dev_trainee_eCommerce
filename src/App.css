@@ -254,3 +254,15 @@ background: #07673c;
   cursor: pointer;
   margin-left: -4px;
  }
+
+ .filterItems{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+ }
+
+ .filterIntro{
+    font-size: larger;
+    font-weight: 600;
+ }

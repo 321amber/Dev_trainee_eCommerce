@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import type { CartItem } from "../types"
 import { removeItemFromCart } from "../features/CartSlice";
-import { Link } from "react-router-dom";
 
 
 function Cart({item}:CartItem) {
