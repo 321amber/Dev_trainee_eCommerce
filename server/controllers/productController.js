@@ -1,12 +1,13 @@
 const db = require('../db')
 exports.craeteProduct = async (req,res)=>{
     const {id, title, description, stock, catagory, price, rating} = req.body;
-    const image_url = `/uploads/${req.file.filename}`;
+    const images = `/uploads/${req.file.filename}`;
+    
 
-    const query = "INSERT INTO products (id, title, description, stock, category, price, rating, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING*"
+    const query = "INSERT INTO products (id, title, description, stock, category, price, rating, images) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING*"
 
     try{
-        const result = await db.query(query, [id, title, description, stock, catagory, price, rating, image_url]);
+        const result = await db.query(query, [id, title, description, stock, catagory, price, rating, images]);
         res.status(200).json(result.rows);
     }
     catch(error){

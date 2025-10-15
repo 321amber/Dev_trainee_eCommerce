@@ -34,7 +34,9 @@ const initialState:CartState={
         existingItem.quantity++;
         existingItem.totalPrice += newItem.price;
       }
-      state.totalAmount = state.items.reduce((total, item) => total + item.totalPrice, 0);
+      state.totalAmount = state.items.reduce((total, item) => total + Number(item.totalPrice), 0);
+      console.log(state.totalAmount);
+      
       console.log(state.items);
       
     },

@@ -1,11 +1,11 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css'
-import MainItems from './pages/MainItems';
 import CartItems from './pages/CartItems';
-import { Filter } from './components/filter';
 import MainLayout from './MainLayout';
 import { AddProducts } from './components/AddProducts';
+import { lazy } from 'react';
+const MainItems = lazy(()=>import('./pages/MainItems'))
 
 function App() {
  

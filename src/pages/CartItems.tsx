@@ -37,7 +37,7 @@ export default function CartItems() {
     </div>
 
             <div className="cartAmount">
-                <p>Total Amount: ₹{Math.floor(totalAmount*88)}.00</p>
+                <p>Total Amount: ₹{Math.floor(totalAmount *88)}.00</p>
                 <button>Place Order</button>
             </div>
     </>

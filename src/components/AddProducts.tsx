@@ -1,6 +1,8 @@
+
 import type { RootState } from "../store";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const AddProducts = () => {
   const items = useSelector((state:RootState)=> state.products.items); 
@@ -11,17 +13,16 @@ export const AddProducts = () => {
     stock:"IN STOCK",
     rating:0,
     description: "",
-    category: "",
-    image: null as File | null,
+    catagory: "",
+    images: null as File | null,
   });
 
-  console.log(formData);
-  
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, files } = e.target as HTMLInputElement;
     if (name === "image" && files) {
-      setFormData({ ...formData, image: files[0] });
+      setFormData({ ...formData, images: files[0] });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -36,11 +37,15 @@ export const AddProducts = () => {
     data.append("rating", formData.rating);
     data.append("title", formData.title);
     data.append("description", formData.description);
-    data.append("category", formData.category);
-    if (formData.image) {
-      data.append("image", formData.image);
+    data.append("catagory", formData.catagory);
+    if (formData.images) {
+      data.append("image", formData.images);
     }
 
+   for (let pair of data.entries()) {
+  console.log(pair[0]+ ': ' + pair[1]);
+}
+    
     try {
       const res = await fetch("http://localhost:3001/products", {
         method: "POST",
@@ -61,21 +66,23 @@ export const AddProducts = () => {
       rating:0,
       title: "",
       description: "",
-      category: "",
-      image: null,
+      catagory: "",
+      images: null,
     });
+
+    navigate('/', {replace:true});
   };
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <input type="text" name="title" placeholder="Title" onChange={handleChange} required />
-      <input type="number" name="price" placeholder="price" onChange={handleChange} required />
-      <input type="text" name="stock" placeholder="price is in stock?" onChange={handleChange}/>
-      <input type="number" name="rating" placeholder="current rating" onChange={handleChange} required />
-      <textarea name="description" placeholder="Description" onChange={handleChange} required />
-      <input type="text" name="category" placeholder="Category" onChange={handleChange} required />
-      <input type="file" name="image" accept="image/*" onChange={handleChange} required />
-      <button type="submit">Add Product</button>
+    <form onSubmit={handleSubmit} encType="multipart/form-data" className="formData">
+      <input type="text" name="title" placeholder="Title" className="entries" onChange={handleChange} required />
+      <input type="text" name="price" placeholder="price in $" className="entries" onChange={handleChange} required />
+      <input type="text" name="stock" placeholder="available is in stock?" className="entries" onChange={handleChange}/>
+      <input type="text" name="rating" placeholder="current rating" className="entries" onChange={handleChange} required />
+      <textarea name="description" placeholder="Description" className="description" onChange={handleChange} required />
+      <input type="text" name="catagory" placeholder="Category" className="entries" onChange={handleChange} required />
+      <input type="file" name="image" accept="image/*" className="imageUpload" onChange={handleChange} required />
+      <button type="submit" className="formSubmit">Add Product</button>
     </form>
   );
 };

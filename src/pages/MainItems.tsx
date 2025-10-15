@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store";
 import { setProducts } from "../features/ProductSlice";
 import { useOutletContext } from "react-router-dom";
+import { Pagination } from "../components/Pagination";
 
 
 type OutletContextType = {
@@ -16,6 +17,9 @@ export default function MainItems() {
      const [searchItems, setSearchItems] = useState<string>("");
      const [searchToggle, setsearchToggle] = useState(false);
      const {catagories} = useOutletContext<OutletContextType>();
+
+     const [currentPage, setCurrentPage] = useState<Number>(1);
+     const [postPerPage, setPostPerPage] = useState<Number>(8);
      
     
      const dispatch = useDispatch();
@@ -32,13 +36,10 @@ export default function MainItems() {
         const prodData = await res.json();
         
         
-        const allProducts = [...data.products, ...prodData];
+        const allProducts = [ ...prodData,...data.products];
         const newProducts = allProducts.flat(Infinity);
         console.log(newProducts);
         
-        // const uniqueProducts = Array.from(
-        // new Map(allProducts.map((item) => [item.id, item])).values()
-        // );
 
         dispatch(setProducts(newProducts));
 
@@ -52,8 +53,13 @@ export default function MainItems() {
         fetchData();  
       },[])
 
+            
+      const lastPage:Number = currentPage * postPerPage;
+      const firstPostIndex:Number = lastPage - postPerPage;
 
-      const filterItems:Product[] = items.filter((currItem)=> {
+      const currentPost = items.slice(firstPostIndex, lastPage);
+
+      const filterItems:Product[] = currentPost.filter((currItem)=> {
         const title:string = currItem.title?.toLowerCase() || "";
         const category:string = currItem.category?.toLowerCase() || "";
         const search:string = searchItems.toLowerCase();
@@ -79,9 +85,7 @@ export default function MainItems() {
            setsearchToggle(false);
         }
       }
-       
-      console.log(filterItems);
-      
+
 
     
     
@@ -119,7 +123,9 @@ export default function MainItems() {
         }
         
       </ul>
-}     
+}   
+
+<Pagination totalPost={items.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage}/>
       </main>
     </>
   )
